@@ -176,7 +176,6 @@ class EnvironmentalMeshManager {
             hasWall = true
             MeshSurfaceCategory.WALL
           }
-          else -> MeshSurfaceCategory.GENERIC_OBSTACLE
         }
 
         val chunk = MeshChunk(
@@ -738,7 +737,7 @@ class EnvironmentalMeshManager {
         queue.add(start)
         visited[start] = true
         while (queue.isNotEmpty()) {
-          val u = queue.poll()
+          val u = queue.poll() ?: continue
           componentSize++
           for (v in adj[u]) {
             if (!visited[v]) {

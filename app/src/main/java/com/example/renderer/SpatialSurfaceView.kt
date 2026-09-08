@@ -396,9 +396,7 @@ class SpatialSurfaceView @JvmOverloads constructor(
 
         DisplayMode.AR -> {
           val syncState = arCoreSessionManager.currentSynchronizedState
-          val isTracking = syncState != null && syncState.trackingState == TrackingState.TRACKING
-
-          if (isTracking && syncState != null) {
+          if (syncState != null && syncState.trackingState == TrackingState.TRACKING) {
             consecutiveNullFrames = 0
             // Derive camera projection and view matrix strictly from this synchronized state
             filamentEngine.setCameraFromArCore(syncState.projectionMatrix, syncState.viewMatrix)

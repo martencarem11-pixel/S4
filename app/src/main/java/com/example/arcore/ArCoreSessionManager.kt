@@ -674,7 +674,7 @@ class ArCoreSessionManager(private val context: Context) {
       var depthTimestampNs = 0L
       val isDepthSupported = currentSession.isDepthModeSupported(Config.DepthMode.AUTOMATIC)
       val isDepthEnabled = currentSession.config.depthMode == Config.DepthMode.AUTOMATIC
-      if (dom != null && isDepthEnabled) {
+      if (isDepthEnabled) {
         reusableDepthAnchorList.clear()
         if (reconciledPrimaryPose != null) {
           reusableDepthAnchorList.add(reconciledPrimaryPose)
@@ -710,16 +710,14 @@ class ArCoreSessionManager(private val context: Context) {
       targetState.anchorRecords = ArrayList(reusableAnchorRecords)
       targetState.depthTimestampNs = depthTimestampNs
       targetState.isDepthValid = isDepthValid
-      targetState.depthTextureId = dom?.depthTextureId ?: 0
-      targetState.depthWidth = dom?.depthWidth ?: 0
-      targetState.depthHeight = dom?.depthHeight ?: 0
-      targetState.minDepthMeters = dom?.minDepthMeters ?: 0f
-      targetState.maxDepthMeters = dom?.maxDepthMeters ?: 0f
-      targetState.averageDepthMeters = dom?.averageDepthMeters ?: 0f
-      targetState.occlusionPercentage = dom?.occlusionPercentage ?: 0f
-      if (dom != null) {
-        System.arraycopy(dom.depthUvTransformMatrix, 0, targetState.depthUvTransformMatrix, 0, 16)
-      }
+      targetState.depthTextureId = dom.depthTextureId
+      targetState.depthWidth = dom.depthWidth
+      targetState.depthHeight = dom.depthHeight
+      targetState.minDepthMeters = dom.minDepthMeters
+      targetState.maxDepthMeters = dom.maxDepthMeters
+      targetState.averageDepthMeters = dom.averageDepthMeters
+      targetState.occlusionPercentage = dom.occlusionPercentage
+      System.arraycopy(dom.depthUvTransformMatrix, 0, targetState.depthUvTransformMatrix, 0, 16)
       targetState.pointCloudTimestampNs = cachedPointCloudTimestampNs
       targetState.pointCloudPointsCount = cachedPointCloudCount
       targetState.pointCloudMeanDistanceMeters = cachedPointCloudMeanDist
@@ -1265,7 +1263,7 @@ class ArCoreSessionManager(private val context: Context) {
 
     // 3. DIRECT DEPTH MAP SAMPLING (True physical depth on non-planar surfaces)
     val dom = depthOcclusionManager
-    if (dom != null && viewportWidth > 0 && viewportHeight > 0) {
+    if (viewportWidth > 0 && viewportHeight > 0) {
       val normX = (xPx / viewportWidth).coerceIn(0f, 1f)
       val normY = (yPx / viewportHeight).coerceIn(0f, 1f)
       val sampledDepth = dom.sampleDepthMetersAtViewCoord(frame, normX, normY)

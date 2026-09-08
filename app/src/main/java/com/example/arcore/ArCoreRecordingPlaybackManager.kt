@@ -215,7 +215,6 @@ class ArCoreRecordingPlaybackManager(private val context: Context) {
         RecordingStatus.NONE -> if (telemetry.isRecording) "STOPPED" else "IDLE"
         RecordingStatus.OK -> "RECORDING"
         RecordingStatus.IO_ERROR -> "ERROR_IO"
-        else -> recStatus.name
       }
 
       val playLabel = when (playStatus) {
@@ -223,7 +222,6 @@ class ArCoreRecordingPlaybackManager(private val context: Context) {
         PlaybackStatus.OK -> "PLAYING"
         PlaybackStatus.FINISHED -> "FINISHED"
         PlaybackStatus.IO_ERROR -> "ERROR_IO"
-        else -> playStatus.name
       }
 
       telemetry = telemetry.copy(

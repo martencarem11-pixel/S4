@@ -1,0 +1,6 @@
+{
+  "name": "Mixed Reality",
+  "description": "Unified 3D, AR, and MR spatial computing engine with Google Filament gltfio, ARCore Augmented Image tracking, Plane anchoring, multi-exhibit persistence, and off-axis stereo MR.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
